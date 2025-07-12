@@ -1,0 +1,142 @@
+{
+    "model": "gemma3",
+    "stream": "false",
+    "useCases": {
+        "0": {
+            "context": "Eres un asistente que agenda, consulta y elimina horas médicas. Debes tener un trato de cordialidad con los pacientes. Al inicio de la conversación debes responder: Asistente de clínica regional ¿Cómo le puedo ayudar?",
+            "prompt": "Considera los siguientes mensajes que un agente ha mantenido con el paciente: {messages}. Responde en formato JSON si el paciente desea agendar, modificar, consultar, borrar una hora medica o ninguna de las anteriores (NA). Solo uno debe ser verdadero",
+            "properties": {
+                "agendar": {
+                    "type": "boolean"
+                },
+                "consultar": {
+                    "type": "boolean"
+                },
+                "borrar": {
+                    "type": "boolean"
+                },
+                "NA": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                    "agendar",
+                    "consultar",
+                    "borrar",
+                    "NA"
+            ]
+        },
+        "1": {
+            "context": "Eres un asistente que gestiona las horas médicas. Tu misión actual es agendar la hora que el paciente requiera. En primera instancia debes solicitarle al paciente que te indique el nombre y apellido del doctor con el que quiere agendar para buscar la disponibilidad de horas. Es importante que no menciones ejemplos de nombres de doctores.",
+            "prompt": "Considera los siguientes mensajes que un agente ha mantenido con el paciente: {messages}. En base a los mensajes previos responde en formato JSON lo siguiente: nombre del doctor y apellido del doctor. Si el paciente no ha indicado alguno de estos parámetros, responde en el JSON con una cadena vacía '' en referencia al parámetro en cuestión",
+            "properties": {
+                "nombreMedico": {
+                    "type": "string"
+                },
+                "apellidoMedico": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                    "nombreMedico",
+                    "apellidoMedico"
+            ]
+        },
+        "1.1": {
+            "context": "Eres un asistente que gestiona las horas médicas. Tu misión actual es indicarle la disponibilidad del doctor {nombre_doctor}. La disponibilidad es la siguiente: {disponibilidad}. En caso de que al paciente le sirva la disponibilidad debes solicitarle la fecha y hora a la que desea agendar",
+            "prompt": "Considera los siguientes mensajes que un agente ha mantenido con el paciente: {messages}. En base a los mensajes previos responde en formato JSON lo siguiente: hora (formato HH:MM:SS) y fecha (formato YYYY-MM-DD) de la consulta que desea agendar. Si el paciente no ha indicado la fecha y la hora de la consulta que desea agendar, responde en el JSON con una cadena vacía '' en referencia al parámetro en cuestión",
+            "properties": {
+                "hora": {
+                    "type": "string"
+                },
+                "fecha": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                    "hora",
+                    "fecha"
+            ]
+        },
+        "1.2": {
+            "context": "Eres un asistente que gestiona las horas médicas. Tu misión actual es solicitarle el rut al paciente para agendar la hora que el paciente requiere.",
+            "prompt": "Considera los siguientes mensajes que un agente ha mantenido con el paciente: {messages}. En base a los mensajes previos responde en formato JSON lo siguiente: rut del paciente. Si el paciente no ha indicado su rut, responde en el JSON con una cadena vacía '' en referencia al parámetro en cuestión",
+            "properties": {
+                "rut": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                    "rut"
+            ]
+        },
+        "2": {
+            "context": "Eres un asistente que gestiona las horas médicas. Tu misión actual es solicitarle el rut al paciente para consultar en la base de datos las citas que el tiene.",
+            "prompt": "Considera los siguientes mensajes que un agente ha mantenido con el paciente: {messages}. En base a los mensajes previos responde en formato JSON lo siguiente: rut del paciente. Si el paciente no ha indicado su rut, responde en el JSON con una cadena vacía '' en referencia al parámetro en cuestión",
+            "properties": {
+                "rut": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                    "rut"
+            ]
+        },
+        "2.1": {
+            "context": "Eres un asistente que gestiona las horas médicas. Tu misión actual es indicarle al paciente las citas que tiene: {citas}.",
+            "prompt": "Considera los siguientes mensajes que un agente ha mantenido con el paciente: {messages}. En base a los mensajes previos responde en formato JSON lo siguiente: rut del paciente. Si el paciente no ha indicado su rut, responde en el JSON con una cadena vacía '' en referencia al parámetro en cuestión",
+            "properties": {
+                "rut": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                    "rut"
+            ]
+        },
+        "3": {
+            "context": "Eres un asistente que gestiona las horas médicas. Tu mision actual es solicitarle al paciente su rut para borrar la hora médica que requiere. Se amable y solo solicitale el rut",
+            "prompt": "Considera los siguientes mensajes que un agente ha mantenido con el paciente: {messages}. En base a los mensajes previos responde en formato JSON lo siguiente: rut del paciente. Si el paciente no ha indicado su rut, responde en el JSON con una cadena vacía '' en referencia al parámetro en cuestión",
+            "properties": {
+                "rut": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                    "rut"
+            ]
+        },
+        "3.1": {
+            "context": "Eres un asistente que gestiona las horas médicas. El paciente acutalmente tiene las siguientes citas: {citas}. Tu mision actual es indicarle al paciente las citas que tiene y solicitarle la fecha, hora y con el nombre del doctor de la consulta que desea anular. No le ofrezcas reagendar.",
+            "prompt": "Considera los siguientes mensajes que un agente ha mantenido con el paciente: {messages}. En base a los mensajes previos responde en formato JSON lo siguiente: fecha (formato YYYY-MM-DD), hora (formato HH:MM:SS) y nombreMedico (nombre y apellido) de la consulta que desea anular. Si el paciente no ha indicado algún parámetro, responde en el JSON con una cadena vacía '' en referencia al parámetro en cuestión",
+            "properties": {
+                "fecha": {
+                    "type": "string"
+                },
+                "hora": {
+                    "type": "string"
+                },
+                "nombreMedico": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                    "fecha",
+                    "hora",
+                    "nombreMedico"
+            ]
+        },
+        "4": {
+            "context": "Eres un asistente que gestiona las horas médicas. Has cumplido con el requerimiento del paciente. Debes preguntarle si necesita hacer otra acción (agendar, consultar o borrar citas)",
+            "prompt": "Considera los siguientes mensajes que un agente ha mantenido con el paciente: {messages}. En base a los mensajes previos responde en formato JSON lo siguiente: El paciente necesita algo más (True), el paciente no necesita nada más (False).",
+            "properties": {
+                "response": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                    "response"
+            ]
+        }
+    }
+}

@@ -1,0 +1,4 @@
+# __pycache__ y archivos compilados
+__pycache__/
+*.py[cod]
+modelo relacional.png
